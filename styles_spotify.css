@@ -1,4 +1,5 @@
 @import url('../Font/Outfit.css');
+
 :root {
     font-family: 'Outfit', sans-serif;
     font-size: 16px;
@@ -7,25 +8,38 @@
     background: #200707;
     font-synthesis: none;
 }
-* {box-sizing: border-box;}
-html, body {height: 100vh; margin: 0; overflow: hidden; text-decoration: none;}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    text-decoration: none;
+}
+
 .login {
     min-height: 100dvh;
     padding: var(--space-6) var(--space-4);
     place-items: center;
     display: grid;
 }
+
 .logbox {
     gap: var(--space-4);
-    width: min(360px,100%);
+    width: min(360px, 100%);
     display: grid;
 }
+
 .login-header {
     font-size: 32px;
     justify-content: center;
     display: flex;
     align-items: center;
 }
+
 .cloud-icon {
     fill: none;
     stroke: currentColor;
@@ -33,16 +47,17 @@ html, body {height: 100vh; margin: 0; overflow: hidden; text-decoration: none;}
     stroke-linecap: round;
     stroke-linejoin: round;
 }
+
 .login-label {
     font-size: 20px;
     padding: 10px;
 }
+
 .inputbox {
     font-family: inherit;
     font-size: 20px;
     text-decoration: none;
     box-sizing: border-box;
-    display: inline-block;
     background-color: #200707;
     text-align: left;
     width: 100%;
@@ -56,10 +71,10 @@ html, body {height: 100vh; margin: 0; overflow: hidden; text-decoration: none;}
     justify-content: center;
     margin-bottom: 15px;
 }
+
 .button {
     font-family: inherit;
     font-size: 18px;
-    display: inline-block;
     text-decoration: none;
     background-color: #e5e1e1;
     text-align: center;
@@ -75,13 +90,313 @@ html, body {height: 100vh; margin: 0; overflow: hidden; text-decoration: none;}
     justify-content: center;
     transition: background-color 0.2s ease;
 }
+
 .button:hover {
     background-color: #591515;
     color: #e5e1e1;
 }
+
 .grid {
     display: grid;
     min-height: 100vh;
-    grid-template-areas:"header" "cloud-panel";
-    grid-template-rows: auto 1fr;
+    grid-template-areas: "header" "playlist-controls" "spotify-panel" "new-elements";
+    grid-template-rows: auto auto 1fr auto;
+}
+
+.spotify-panel {
+    text-decoration: none;
+    grid-area: spotify-panel;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-content: flex-start;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.new-elements {
+    grid-area: new-elements;
+    text-decoration: none;
+    padding: 15px;
+    display: flex;
+    gap: 15px;
+}
+
+.new-elements label.element {
+    width: 60px !important;
+    height: 50px !important;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;
+    border-radius: 12px;
+    border: 2px solid #c4a9a9;
+    background-color: #200707;
+}
+
+.new-elements label.element:hover {
+    border-color: #ce9191;
+}
+
+.element {
+    position: relative !important;
+    cursor: pointer;
+    text-decoration: none;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding: 13px;
+    gap: 10px;
+    padding-right: 35px !important; 
+    border-radius: 17px;
+    border: 2px solid;
+    border-color: #c4a9a9;
+    width: auto;
+    min-width: 354px;
+    height: 50px;
+    z-index: 1;
+    background-color: #200707;
+}
+
+.element:hover, .element.active-track {
+    border-color: #ce9191;
+}
+
+.element-popup {
+    cursor: pointer;
+    text-decoration: none;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding: 13px;
+    border-radius: 17px;
+    border: 2px solid;
+    border-color: #c4a9a9;
+    width: auto;
+    height: 50px;
+    z-index: 1;
+    background-color: #200707;
+}
+
+.element-popup:hover {
+    border-color: #ce9191;
+}
+
+/* POPUPY – NAPRAWIONE SELEKTORY I UKRYWANIE CHECKBOXÓW */
+.popup-checkbox {
+    display: none;
+}
+
+#popup-playlist:checked ~ #overlay-playlist,
+#popup-file:checked ~ #overlay-file,
+#popup-add-to-playlist:checked ~ #overlay-add-to-playlist {
+    opacity: 1;
+    visibility: visible;
+}
+
+#popup-playlist:checked ~ #overlay-playlist .popup-box,
+#popup-file:checked ~ #overlay-file .popup-box,
+#popup-add-to-playlist:checked ~ #overlay-add-to-playlist .popup-box {
+    transform: scale(1);
+}
+
+.popup-box {
+    background-color: #200707;
+    border: 2px solid #591515;
+    padding: 25px;
+    border-radius: 12px;
+    width: min(400px, 90%);
+    color: #c4a9a9;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.element-panel .popup-checkbox:checked ~ .popup-overlay .popup-box {
+    transform: scale(1);
+}
+
+.element-panel {
+    padding: 5px;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.button-popup, button.button-popup {
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font: inherit;
+    font-family: inherit;
+    background-color: #200707;
+    border: 2px solid;
+    border-color: #c4a9a9;
+    color: #c4a9a9;
+    text-decoration: none;
+}
+
+.button-popup:hover, button.button-popup:hover {
+    border-color: #ce9191;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* POŁĄCZONE I UPORZĄDKOWANE .playlist-controls */
+.playlist-controls {
+    grid-area: playlist-controls;
+    position: sticky;
+    top: 15px;
+    z-index: 9999;
+    background: #181818;
+    color: #fff;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    font-family: sans-serif;
+    border: 1px solid #591515;
+    
+    width: 90%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+}
+
+#global-playing-label {
+    font-size: 13px;
+    color: #ce9191;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 400px;
+}
+
+.global-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.ctrl-btn {
+    background: transparent;
+    color: #fff;
+    border: 1px solid #444;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.ctrl-btn:hover {
+    background: #3e3e3e;
+    border-color: #ce9191;
+}
+
+.global-player-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-grow: 1;
+    margin: 0 15px;
+}
+
+.player-progress-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: #c4a9a9;
+}
+
+#global-progress {
+    flex-grow: 1;
+    accent-color: #ce9191;
+    cursor: pointer;
+}
+
+.global-volume-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 15px;
+}
+
+#global-volume {
+    width: 80px;
+    accent-color: #ce9191;
+    cursor: pointer;
+}
+
+.element-panel.audio-element-panel {
+    cursor: pointer;
+}
+
+.element-panel.active-track .element,
+.element-panel.active-track .track-item {
+    border-color: #ce9191 !important;
+}
+/* Styl dla modala obrazu/mediów (ukryty domyślnie, pokazuje się przez JS) */
+.media-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.media-modal-content {
+    background-color: #200707;
+    border: 2px solid #591515;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 90%;
+    max-height: 90vh;
+    position: relative;
+    color: #c4a9a9;
+}
+
+.media-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #c4a9a9;
+}
+
+.media-close:hover {
+    color: #ce9191;
 }

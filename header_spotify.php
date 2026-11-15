@@ -29,13 +29,15 @@ $accumulated_path = '';
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <div class="navbar-nav">
-            <a class="generic-text" href="#">Item</a>
-            <a class="generic-text" href="#">Item</a>
-            <a class="generic-text" href="#">Item</a>
-            <a class="generic-text" href="#">Item</a>
-            <a class="generic-text" href="#">Item</a>
-            <a class="generic-text" href="#">Item</a>
-            <a class="generic-text" href="#">Item</a>
+            <a class="generic-text" href="user_panel_spotify.php?dir=<?php echo urlencode($_SESSION['user']); ?>">Moje piosenki</a>
+            <a class="generic-text" href="user_panel_spotify.php?public_playlists=1">Publiczne Playlisty</a>
+            <?php if (!empty($playlists)): ?>
+                <?php foreach ($playlists as $playlist): ?>
+                    <a class="generic-text playlist-link" href="user_panel_spotify.php?playlist_id=<?php echo (int)$playlist['idpl']; ?>">
+                        <?php echo htmlspecialchars($playlist['name']); ?>
+                    </a>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
     <div class="user-panel">

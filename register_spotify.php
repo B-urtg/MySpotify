@@ -5,14 +5,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Zawada MySpotify</title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="styles_spotify.css">
     </head>
     <body>
         <main class="login">
             <div class="logbox">
                 <div class="login-header">
-                    <svg class="cloud-icon" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="spotify-icon">
+                        <path d="M 4 8 A 16 16 0 0 1 20 9.2"></path>
+                        <path d="M 5.5 13 A 13 13 0 0 1 18.5 14"></path>
+                        <path d="M 7 18 A 10 10 0 0 1 17 18.7"></path>
                     </svg>
                 </div>
                 <div class="login-header">

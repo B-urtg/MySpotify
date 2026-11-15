@@ -44,6 +44,7 @@ else
   $_SESSION['user']=$rekord['username'];
   $_SESSION['avatar']=$rekord['avatar'];
   $_SESSION['user_home'] = '/mnt/drive/spotify/' . $clean_user_dir_name . '/';
+  $_SESSION['id']=$rekord['id'];
   mysqli_close($link);
   header("Location: user_panel_spotify.php");
   exit();
