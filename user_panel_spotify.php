@@ -222,6 +222,30 @@ if ($stmt) {
                                     <?php echo htmlspecialchars($song['display_name']); ?>
                                 </div>
                             </div>
+
+                            <label for="popup-delete-<?php echo md5($song['file']); ?>" class="del-btn" title="Usuń" onclick="event.stopPropagation();">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="trash-icon">
+                                    <path d="M3 6h18"></path>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                </svg>
+                            </label>
+                            <input type="checkbox" id="popup-delete-<?php echo md5($song['file']); ?>" class="popup-checkbox">
+                            <div class="popup-overlay" id="overlay-delete-<?php echo md5($song['file']); ?>">
+                                <div class="popup-box">
+                                    <h3>Usuwanie elementu</h3>
+                                    <p>Czy na pewno chcesz usunąć: <strong><?php echo htmlspecialchars($song['display_name']); ?></strong>?</p>
+                                    <form action="delete_spotify.php" method="POST">
+                                        <input type="hidden" name="current_dir" value="<?php echo htmlspecialchars($song['user']); ?>">
+                                        <input type="hidden" name="file_to_delete" value="<?php echo htmlspecialchars($song['file']); ?>">
+                                        <div class="popup-buttons">
+                                            <button type="submit" class="button-popup">Usuń</button>
+                                            <label for="popup-delete-<?php echo md5($song['file']); ?>" class="button-popup" style="display:inline-block; text-align:center; line-height:normal; cursor:pointer;">Anuluj</label>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>

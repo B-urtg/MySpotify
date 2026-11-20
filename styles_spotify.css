@@ -400,3 +400,27 @@ html, body {
 .media-close:hover {
     color: #ce9191;
 }
+
+.del-btn {
+    position: absolute;
+    top: 11px;
+    right: 11px;
+    z-index: 5; 
+    width: 28px;
+    height: 28px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: #c4a9a9;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+.del-btn:hover {
+    color: #ff4d4d;
+    background-color: rgba(255, 77, 77, 0.1);
+}
