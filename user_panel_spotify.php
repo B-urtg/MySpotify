@@ -213,6 +213,8 @@ if ($stmt) {
                     <!-- Pętla renderująca pliki w kafelkach audio -->
                     <?php foreach ($playlist_files as $song): 
                         $file_url = "stream_spotify.php?user=" . urlencode($song['user']) . "&file=" . urlencode($song['file']);
+                        $is_own_song = ($song['user'] === $username);
+                        $del_id = md5($song['user'] . '/' . $song['file']);
                     ?>
                         <div class="element-panel audio-element-panel">
                             <audio preload="none" src="<?php echo htmlspecialchars($file_url); ?>"></audio>
@@ -221,31 +223,36 @@ if ($stmt) {
                                 <div class="content-box">
                                     <?php echo htmlspecialchars($song['display_name']); ?>
                                 </div>
+
+                                <?php if ($is_own_song): ?>
+                                    <label for="popup-delete-<?php echo $del_id; ?>" class="del-btn" title="Usuń" onclick="event.stopPropagation();">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="trash-icon">
+                                            <path d="M3 6h18"></path>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                                        </svg>
+                                    </label>
+                                <?php endif; ?>
                             </div>
 
-                            <label for="popup-delete-<?php echo md5($song['file']); ?>" class="del-btn" title="Usuń" onclick="event.stopPropagation();">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="trash-icon">
-                                    <path d="M3 6h18"></path>
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg>
-                            </label>
-                            <input type="checkbox" id="popup-delete-<?php echo md5($song['file']); ?>" class="popup-checkbox">
-                            <div class="popup-overlay" id="overlay-delete-<?php echo md5($song['file']); ?>">
-                                <div class="popup-box">
-                                    <h3>Usuwanie elementu</h3>
-                                    <p>Czy na pewno chcesz usunąć: <strong><?php echo htmlspecialchars($song['display_name']); ?></strong>?</p>
-                                    <form action="delete_spotify.php" method="POST">
-                                        <input type="hidden" name="current_dir" value="<?php echo htmlspecialchars($song['user']); ?>">
-                                        <input type="hidden" name="file_to_delete" value="<?php echo htmlspecialchars($song['file']); ?>">
-                                        <div class="popup-buttons">
-                                            <button type="submit" class="button-popup">Usuń</button>
-                                            <label for="popup-delete-<?php echo md5($song['file']); ?>" class="button-popup" style="display:inline-block; text-align:center; line-height:normal; cursor:pointer;">Anuluj</label>
-                                        </div>
-                                    </form>
+                            <?php if ($is_own_song): ?>
+                                <input type="checkbox" id="popup-delete-<?php echo $del_id; ?>" class="popup-checkbox">
+                                <div class="popup-overlay" id="overlay-delete-<?php echo $del_id; ?>" onclick="document.getElementById('popup-delete-<?php echo $del_id; ?>').checked = false;">
+                                    <div class="popup-box" onclick="event.stopPropagation();">
+                                        <h3>Usuwanie elementu</h3>
+                                        <p>Czy na pewno chcesz usunąć: <strong><?php echo htmlspecialchars($song['display_name']); ?></strong>?</p>
+                                        <form action="delete_song_spotify.php" method="POST">
+                                            <input type="hidden" name="current_dir" value="<?php echo htmlspecialchars($song['user']); ?>">
+                                            <input type="hidden" name="file_to_delete" value="<?php echo htmlspecialchars($song['file']); ?>">
+                                            <div class="popup-buttons">
+                                                <button type="submit" class="button-popup">Usuń</button>
+                                                <label for="popup-delete-<?php echo $del_id; ?>" class="button-popup" style="display:inline-block; text-align:center; line-height:normal; cursor:pointer;">Anuluj</label>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -280,6 +287,16 @@ if ($stmt) {
                         <line x1="3" y1="6" x2="3.01" y2="6"></line>
                         <line x1="3" y1="12" x2="3.01" y2="12"></line>
                         <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                    </svg>
+                </label>
+
+                <!-- 4. Przycisk: Usuń swoją playlistę -->
+                <label for="popup-delete-playlist" class="element-popup" title="Usuń swoją playlistę">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 6h18"></path>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                        <line x1="14" y1="11" x2="14" y2="17"></line>
                     </svg>
                 </label>
 
@@ -367,6 +384,27 @@ if ($stmt) {
                             <div class="popup-buttons">
                                 <label for="popup-add-to-playlist" class="button-popup">Anuluj</label>
                                 <button type="submit" class="button-popup">Dodaj do playlisty</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- POPUP 4: Usuwanie playlisty stworzonej przez zalogowanego użytkownika -->
+                <input type="checkbox" id="popup-delete-playlist" class="popup-checkbox">
+                <div class="popup-overlay" id="overlay-delete-playlist">
+                    <div class="popup-box">
+                        <h3>Usuń swoją playlistę</h3>
+                        <form action="delete_playlist_spotify.php" method="POST">
+                            <label style="display:block; margin-bottom:5px; font-size:14px;">Wybierz playlistę do usunięcia:</label>
+                            <select name="idpl" required class="inputbox">
+                                <option value="" disabled selected>Wybierz playlistę</option>
+                                <?php foreach ($playlists as $pl): ?>
+                                    <option value="<?php echo (int)$pl['idpl']; ?>"><?php echo htmlspecialchars($pl['name']); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <div class="popup-buttons">
+                                <label for="popup-delete-playlist" class="button-popup">Anuluj</label>
+                                <button type="submit" class="button-popup">Usuń</button>
                             </div>
                         </form>
                     </div>

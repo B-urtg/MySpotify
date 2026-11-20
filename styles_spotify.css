@@ -190,14 +190,16 @@ html, body {
 
 #popup-playlist:checked ~ #overlay-playlist,
 #popup-file:checked ~ #overlay-file,
-#popup-add-to-playlist:checked ~ #overlay-add-to-playlist {
+#popup-add-to-playlist:checked ~ #overlay-add-to-playlist,
+#popup-delete-playlist:checked ~ #overlay-delete-playlist {
     opacity: 1;
     visibility: visible;
 }
 
 #popup-playlist:checked ~ #overlay-playlist .popup-box,
 #popup-file:checked ~ #overlay-file .popup-box,
-#popup-add-to-playlist:checked ~ #overlay-add-to-playlist .popup-box {
+#popup-add-to-playlist:checked ~ #overlay-add-to-playlist .popup-box,
+#popup-delete-playlist:checked ~ #overlay-delete-playlist .popup-box {
     transform: scale(1);
 }
 
