@@ -27,11 +27,11 @@
                     </div>
                     <div class="textbox">
                         <label class="login-label">Hasło</label>
-                        <input type="text" name="pass" class="inputbox" id="input" maxlength="20" size="20">
+                        <input type="pass" name="pass" class="inputbox" id="input" maxlength="20" size="20">
                     </div>
                     <div class="textbox">
                         <label class="login-label">Powtórz hasło</label>
-                        <input type="text" name="pass2" class="inputbox" id="input" maxlength="20" size="20">
+                        <input type="pass" name="pass2" class="inputbox" id="input" maxlength="20" size="20">
                     </div>
                     <label class="login-label">Dodaj avatar</label>
                     <input class="inputbox" type="file" class="form-control" id="avatar" name="avatar" accept=".png, .jpg, .jpeg">
